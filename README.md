@@ -73,3 +73,29 @@ Returns NSOperationQueue for this collection.
 ```objc
 + (NSOperationQueue *)operationQueueForBackgroundThread
 ```
+
+### NSURLConnection waitUntilAllBackgroundThreadConnectionsAreFinished
+
+Blocks the current thread until all of the background thraded NSURLConnections finish executing.
+
+#### Prototype
+
+```objc
++ (void)operationQueueForBackgroundThread
+```
+
+#### Usage
+
+Add the following codes to AppDelegate to wait until all background threaded connections are finsished at the Applicate enter to the background.
+
+```objc
+    bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+        [application endBackgroundTask:bgTask];
+        bgTask = UIBackgroundTaskInvalid;
+    }];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [NSURLConnection waitUntilAllBackgroundThreadConnectionsAreFinished];
+        [application endBackgroundTask:bgTask];
+        bgTask = UIBackgroundTaskInvalid;
+    });
+```
