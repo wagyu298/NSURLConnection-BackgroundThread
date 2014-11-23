@@ -12,5 +12,7 @@
 + (void)sendAsynchronousRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLResponse *response, NSData *data, NSError *connectionError))handler;
 
 + (NSOperationQueue *)operationQueueForBackgroundThread;
++ (void)waitUntilAllBackgroundThreadConnectionsAreFinished;
++ (NSInteger)backgroundThreadConnectionCount;
 
 @end
